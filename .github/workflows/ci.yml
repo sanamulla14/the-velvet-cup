@@ -1,0 +1,32 @@
+name: The Velvet Cup CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate project files
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f script.js
+          test -f Dockerfile
+          echo "All required project files are present."
+
+      - name: Build Docker image
+        run: docker build -t the-velvet-cup .
+
+      - name: Verify Docker image
+        run: docker images the-velvet-cup
