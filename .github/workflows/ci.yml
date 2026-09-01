@@ -25,6 +25,11 @@ jobs:
           test -f Dockerfile
           echo "All required project files are present."
 
+      - name: Run automated website test
+        run: |
+          grep -qi "THE VELVET CUP" index.html
+          echo "Website title test passed."
+
       - name: Build Docker image
         run: docker build -t the-velvet-cup .
 
